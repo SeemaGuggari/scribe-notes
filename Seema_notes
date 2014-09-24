@@ -1,4 +1,4 @@
-Mesa is a concurrent based	programming language. It was introduced to overcome the shortcomings of monitors. There were several design constraints of monitors. For example, WAIT was not properly designed in a nested monitor call, there was no proper synchronization between monitors and also there was no mechanism to handle exceptions.
+Mesa is a concurrent based programming language. It was introduced to overcome the shortcomings of monitors. There were several design constraints of monitors. For example, WAIT was not properly designed in a nested monitor call, there was no proper synchronization between monitors and also there was no mechanism to handle exceptions.
 
 
 Evolution of Threads.
@@ -31,7 +31,7 @@ If thread 1 executes first
 
 Preemptive Scheduling
 
- Thread 1                   		Thread 2
+ Thread 1                   	Thread 2
   a = 1;                         a = 2;
   b = 2;                         b = 4;
   c =  3;                        c  = 6;
@@ -44,19 +44,20 @@ In contrast to process, threads have the same address space and are known as lig
 
 When there is a context switch from one process to another, scheduler copies the contents of the registers, stack, file descriptor table and the hash table.
 
+
 Translation Look Aside Buffer (Hash Table)
 
 TLB is a cache which has the page table entries to map the virtual address to physical address. This cache can be designed in various ways:
-•	Hardware LRU Cache:
+• Hardware LRU Cache:
   This has almost 512 slots available to be filled for every virtual to physical addressing mapping. This type of cache is      
   sometimes referred to as direct mapping and is fully associative.  From hardware perspective, it’s an expensive cache.  If no   slot is available in the LRU, it swaps the contents of the least recently used with the new entry.
-•	One way Set Associative LRU Cache:
+• One way Set Associative LRU Cache:
   Here the cache has 8 slots and it computes the slot where each new entry has to be written via (pg/4096) % 8.  If no space is   available for a new entry, the contents already present in the corresponding slot are directly scrapped out for the new entry.   This cache has the lowest  hardware cost.
-•	Two way Set Associative LRU Cache:
+• Two way Set Associative LRU Cache:
   This also consists of 8 slots, but the depth of the cache is 2. Hence two entries corresponding to the same slot could be   
   entered in this type of cache. 
 
-If the depth of the cache increases, it tends to be more expensive.  We conclude that depth of the cache is directly proportional to hardware cost.  A graph has been shown below which indicates that as the hardware cost increases, TLB hits also increase. Having a cache which has a depth of 8 is said considered to be “sweet spot ”,  the most optimal solution between cost and TLB Hits.
+If the depth of the cache increases, it tends to be more expensive. We conclude that depth of the cache is directly proportional to hardware cost.  A graph has been shown below which indicates that as the hardware cost increases, TLB hits also increase. Having a cache which has a depth of 8 is said considered to be “sweet spot ”,  the most optimal solution between cost and TLB Hits.
 
 
 TLB Miss:
@@ -94,16 +95,16 @@ Problem with threads:
 
 Consider another example:
     
-    T1(High)                                               T2(Low)
-        -                                                  Lock(a);
-        -                                                       -
-        -                                                       -
-        -				  	                                            -
-	      -				                                                -		
-     Lock(a);                                                   -      
-        -	                      		                            -
-        -	         			                                        -
-        -	                                                      -
+    T1(High)                                         T2(Low)
+        -                                            Lock(a);
+        -                                               -
+        -                                               -
+        -				  	        -
+	-				                -		
+     Lock(a);                                           -      
+        -	                      		        -
+        -	         			        -
+        -	                                        -
         
 Even if T1 has higher priority, it is blocked, since T2 locks the condition variable first. This is known as “Priority Inversion”, where lower priority threads blocks the higher priority threads.
 
@@ -111,8 +112,8 @@ Even if T1 has higher priority, it is blocked, since T2 locks the condition vari
 Semaphore
 
 To solve problems associated with priorities, Semaphore was introduced. This counting semaphore is a variable which is used to control access by multiple processes. Semaphores which have two values, are known as binary semaphores. Semaphores consists of 2 operations:
--	Prolagen (try to decrease)
--	Verlieren (increase)
+- Prolagen (try to decrease)
+- Verlieren (increase)
 
 If a semaphore is initialized to a  value 1,
 P( ) – sets the value of semaphore to 0
@@ -131,6 +132,7 @@ In this case, the process blocks itself causing a deadlock.
 
 Recursive Locks  
 Due to the problem faced by semaphores, recursive locks were introduced. Here each thread could recursively acquire lock multiple times.
+
 
 For Example:
    Class A
